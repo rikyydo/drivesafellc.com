@@ -6,6 +6,7 @@
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d', { alpha: false });
+  const hero = canvas.parentElement;
 
   // ── Settings ─────────────────────────────────────
   const SERVICES = [
@@ -72,10 +73,12 @@
   // ── Init / Resize ────────────────────────────────
   function init() {
     dpr = window.devicePixelRatio || 1;
-    W = canvas.clientWidth;
-    H = canvas.clientHeight;
+    W = hero.offsetWidth;
+    H = hero.offsetHeight;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const isMobile = W < CFG.mobileBP;

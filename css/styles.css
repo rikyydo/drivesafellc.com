@@ -274,6 +274,7 @@ img {
     align-items: center;
     overflow: hidden;
     padding: 120px 0 80px;
+    background: linear-gradient(135deg, #2d0a4e 0%, #531F8A 55%, #c99a10 100%);
 }
 
 .hero-canvas {
