@@ -96,12 +96,27 @@
       });
     }
 
-    // Pick label slots (spread across canvas)
-    const numLabels = Math.min(CFG.visibleLabels, count);
-    const step = Math.floor(count / numLabels);
+    // Pick label slots — on desktop use points in the right side only
+    // to avoid overlapping hero text; on mobile hide labels entirely
+    // since centered content covers the full width
+    const isMobileInit = W < CFG.mobileBP;
     labelSlots = [];
-    for (let i = 0; i < numLabels; i++) {
-      labelSlots.push(i * step);
+    if (!isMobileInit) {
+      const numLabels = Math.min(CFG.visibleLabels, count);
+      const rightZonePoints = [];
+      for (let i = 0; i < count; i++) {
+        if (points[i].x > W * 0.55) rightZonePoints.push(i);
+      }
+      if (rightZonePoints.length >= numLabels) {
+        const step = Math.floor(rightZonePoints.length / numLabels);
+        for (let i = 0; i < numLabels; i++) {
+          labelSlots.push(rightZonePoints[i * step]);
+        }
+      } else {
+        for (let i = 0; i < Math.min(numLabels, rightZonePoints.length); i++) {
+          labelSlots.push(rightZonePoints[i]);
+        }
+      }
     }
 
     // Init labels
